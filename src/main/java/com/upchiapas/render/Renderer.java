@@ -3,9 +3,6 @@ package com.upchiapas.render;
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
 
-import java.util.LinkedList;
-import java.util.List;
-
 public class Renderer extends GameApplication {
     @Override
     protected void initSettings(GameSettings settings) {
