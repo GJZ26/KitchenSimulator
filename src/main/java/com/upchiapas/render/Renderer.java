@@ -2,23 +2,26 @@ package com.upchiapas.render;
 
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
+import com.almasb.fxgl.dsl.FXGL;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class Renderer extends GameApplication {
     @Override
     protected void initSettings(GameSettings settings) {
-
         settings.setWidth(700);
         settings.setHeight(700);
-        settings.setFullScreenAllowed(true);
-        settings.setGameMenuEnabled(false);
-        settings.setVersion("1.0.0");
-        settings.setTitle("Kitchen Simulator");
+        settings.setTitle("Learning how to use this shit");
     }
 
-    public static void run(String[] args) {
+    @Override
+    protected void initUI() {
+        var texture = FXGL.getAssetLoader().loadTexture("Map/Floor.png");
+
+
+        FXGL.getGameScene().addUINode(texture);
+    }
+
+    public static void main(String[] args) {
         launch(args);
     }
 }
