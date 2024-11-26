@@ -1,6 +1,7 @@
-package worker;
+package com.upchiapas.worker;
 
-import service.RestauranteService;
+
+import com.upchiapas.service.RestauranteService;
 
 public class Cliente extends Thread {
     private final RestauranteService restauranteService;

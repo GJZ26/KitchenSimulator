@@ -1,4 +1,4 @@
-package model;
+package com.upchiapas.model;
 
 public class Orden {
     private final int id;

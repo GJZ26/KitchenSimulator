@@ -1,13 +1,14 @@
-package service;
+package com.upchiapas.service;
+
+import com.upchiapas.config.RestauranteConfig;
+import com.upchiapas.model.EstadoOrden;
+import com.upchiapas.model.Orden;
 
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Queue;
 
-import config.RestauranteConfig;
-import model.EstadoOrden;
-import model.Orden;
 
 public class RestauranteService {
     private static final int MAX_MESAS = RestauranteConfig.CAPACIDAD;
