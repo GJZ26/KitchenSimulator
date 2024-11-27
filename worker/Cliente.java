@@ -14,6 +14,7 @@ public class Cliente extends Thread {
     public void run() {
         try {
             numeroMesa = restauranteService.intentarSentarse();
+            // Comer
             while (!restauranteService.retirarCliente(threadId())) {
                 Thread.sleep(1000);
             }
