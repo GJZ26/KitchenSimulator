@@ -12,7 +12,7 @@ public class Main {
         RenderEntityCollection clients = new RenderEntityCollection();
         RenderEntityCollection dishes = new RenderEntityCollection();
         RenderEntityCollection chefs = new RenderEntityCollection();
-
+        RenderEntityCollection waiters = new RenderEntityCollection();
 
         RestauranteService restauranteService = new RestauranteService(dishes);
         Render render = new Render();
@@ -22,6 +22,7 @@ public class Main {
         render.setClients(clients);
         render.setDishes(dishes);
         render.setChefs(chefs);
+        render.setWaiters(waiters);
 
         Thread renderThread = new Thread(() -> render.run(args));
         renderThread.setDaemon(true); // Marca el hilo como daemon para que no bloquee la salida de la aplicación.
@@ -29,7 +30,7 @@ public class Main {
 
 
         for (int i = 0; i < RestauranteConfig.NUM_MESEROS; i++) {
-            new Mesero(restauranteService).start();
+            new Mesero(restauranteService,waiters,i).start();
         }
 
         for (int i = 0; i < RestauranteConfig.NUM_COCINEROS; i++) {

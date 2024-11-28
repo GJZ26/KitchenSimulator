@@ -14,6 +14,7 @@ public class Render extends GameApplication {
     static RenderEntityCollection clients;
     static RenderEntityCollection dishes;
     static RenderEntityCollection chefs;
+    static RenderEntityCollection waiters;
 
     public void renderClients() {
         if (clients == null) {
@@ -44,6 +45,20 @@ public class Render extends GameApplication {
         for (RenderData data : chefsRender) {
             this.render(RenderResource.CHEF, data.x, data.y, data.direction);
         }
+    }
+
+    public void renderWaiters() {
+        if (waiters == null) {
+            return;
+        }
+        RenderData[] waitersRender = waiters.getRenderData();
+        for (RenderData data : waitersRender) {
+            this.render(RenderResource.WAITER, data.x, data.y, data.direction);
+        }
+    }
+
+    public void setWaiters(RenderEntityCollection waiters) {
+        Render.waiters = waiters;
     }
 
     public void setTables(RenderData[] tablesMan) {
@@ -83,6 +98,7 @@ public class Render extends GameApplication {
         this.renderClients();
         this.renderTables();
         this.renderChefs();
+        this.renderWaiters();
         this.renderOverlays();
         this.renderDishes();
     }

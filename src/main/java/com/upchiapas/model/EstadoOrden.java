@@ -7,5 +7,6 @@ public enum EstadoOrden {
     EN_PREPARACION,
     LISTA,
     SERVIDA,
-    COMPLETADA
+    COMPLETADA,
+    EN_CAMINO
 }

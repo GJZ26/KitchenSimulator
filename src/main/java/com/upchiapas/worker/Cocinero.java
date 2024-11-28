@@ -11,7 +11,7 @@ public class Cocinero extends Thread {
     RenderEntityCollection chefs;
     double x;
     double y = 600;
-    double speed = 4;
+    double speed = 6;
     int chefNumber;
 
     // 650, 550
@@ -37,7 +37,7 @@ public class Cocinero extends Thread {
                     Thread.sleep(1000 / 60);
                 }
                 // Cocina
-                Thread.sleep((long) (Math.random() * 3000 + 2000));
+                Thread.sleep((long) (Math.random() * 100 + 200));
                 // Camina hacia la barra
                 while (true) {
                     this.y -= speed;

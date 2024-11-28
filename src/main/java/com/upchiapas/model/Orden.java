@@ -36,11 +36,16 @@ public class Orden {
     }
 
     public void setEstado(EstadoOrden estado) {
-        if (Objects.requireNonNull(estado) == EstadoOrden.SERVIDA) {
+        if (Objects.requireNonNull(estado) == EstadoOrden.LISTA) {
             dishes.addOrUpdate(
                     this.id, new RenderData(
-                            0,0, (new Random()).nextInt(4),Direction.UP
+                            0, 0, (new Random()).nextInt(4), Direction.UP
                     )
+            );
+        }
+        if (Objects.requireNonNull(estado) == EstadoOrden.EN_CAMINO) {
+            dishes.remove(
+                    this.id
             );
         }
         this.estado = estado;

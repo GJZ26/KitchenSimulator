@@ -91,22 +91,26 @@ public class RestauranteService {
         }
     }
 
-    public Orden servirOrden() throws InterruptedException {
+    public Orden tomarOrden() throws InterruptedException {
         synchronized (lock) {
             long meseroId = Thread.currentThread().threadId();
             while (true) {
                 for (Orden orden : ordenManager.getOrdenesActivas().values()) {
-                    if (orden != null &&
-                            orden.getEstado() == EstadoOrden.LISTA &&
-                            orden.getMeseroAsignado() == meseroId) {
-                        orden.setEstado(EstadoOrden.SERVIDA);
-                        orden.setOrdenServida(true);
+                    if (orden != null && orden.getEstado() == EstadoOrden.LISTA && orden.getMeseroAsignado() == meseroId) {
+                        orden.setEstado(EstadoOrden.EN_CAMINO);
                         System.out.println("Mesero: " + meseroId + " sirve la orden: " + orden.getId() + " al cliente: " + orden.getIdCliente());
                         return orden;
                     }
                 }
                 lock.wait(RestauranteConfig.DELAY_BASE);
             }
+        }
+    }
+
+    public void servirOrden(Orden orden) throws InterruptedException {
+        synchronized (lock) {
+            orden.setEstado(EstadoOrden.SERVIDA);
+            orden.setOrdenServida(true);
         }
     }
 
