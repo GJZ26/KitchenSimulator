@@ -12,9 +12,11 @@ import com.upchiapas.render.collection.RenderEntityCollection;
 public class Render extends GameApplication {
     static RenderData[] tables;
     static RenderEntityCollection clients;
+    static RenderEntityCollection dishes;
+    static RenderEntityCollection chefs;
 
     public void renderClients() {
-        if(clients == null) {
+        if (clients == null) {
             return;
         }
         RenderData[] clientsRender = clients.getRenderData();
@@ -23,12 +25,41 @@ public class Render extends GameApplication {
         }
     }
 
+    public void renderDishes() {
+        if (dishes == null) {
+            return;
+        }
+        RenderData[] dishesRender = dishes.getRenderData();
+        for (int i = 0; i < dishesRender.length; i++) {
+            var data = dishesRender[i];
+            this.render(RenderResource.DISHES[data.texture], 10 + (i * 50), 525, data.direction);
+        }
+    }
+
+    public void renderChefs() {
+        if (chefs == null) {
+            return;
+        }
+        RenderData[] chefsRender = chefs.getRenderData();
+        for (RenderData data : chefsRender) {
+            this.render(RenderResource.CHEF, data.x, data.y, data.direction);
+        }
+    }
+
     public void setTables(RenderData[] tablesMan) {
         tables = tablesMan;
     }
 
-    public void  setClients(RenderEntityCollection clientsMan) {
+    public void setClients(RenderEntityCollection clientsMan) {
         clients = clientsMan;
+    }
+
+    public void setDishes(RenderEntityCollection dishesMan) {
+        dishes = dishesMan;
+    }
+
+    public void setChefs(RenderEntityCollection chefsMan) {
+        chefs = chefsMan;
     }
 
     @Override
@@ -51,6 +82,8 @@ public class Render extends GameApplication {
         this.renderBackground();
         this.renderClients();
         this.renderTables();
+        this.renderChefs();
+        this.renderDishes();
         this.renderOverlays();
     }
 
