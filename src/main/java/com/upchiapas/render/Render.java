@@ -5,10 +5,7 @@ import com.almasb.fxgl.app.GameSettings;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.texture.Texture;
 import com.upchiapas.config.RenderConfiguration;
-
-enum Direction {
-    UP, DOWN, LEFT, RIGHT;
-}
+import com.upchiapas.model.Direction;
 
 public class Render extends GameApplication {
 
