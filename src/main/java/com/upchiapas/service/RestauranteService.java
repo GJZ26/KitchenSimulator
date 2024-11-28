@@ -4,6 +4,7 @@ import com.upchiapas.config.RestauranteConfig;
 import com.upchiapas.model.EstadoOrden;
 import com.upchiapas.model.Orden;
 import com.upchiapas.model.RenderData;
+import com.upchiapas.render.collection.RenderEntityCollection;
 
 public class RestauranteService {
     private final Object lock = new Object();
@@ -11,10 +12,10 @@ public class RestauranteService {
     private ColaEsperaManager colaEsperaManager;
     private OrdenManager ordenManager;
 
-    public RestauranteService() {
+    public RestauranteService(RenderEntityCollection dishes) {
         this.mesaManager = new MesaManager(RestauranteConfig.CAPACIDAD);
         this.colaEsperaManager = new ColaEsperaManager();
-        this.ordenManager = new OrdenManager();
+        this.ordenManager = new OrdenManager(dishes);
     }
 
     public RenderData intentarSentarse() throws InterruptedException {

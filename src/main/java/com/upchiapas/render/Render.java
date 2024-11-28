@@ -32,7 +32,7 @@ public class Render extends GameApplication {
         RenderData[] dishesRender = dishes.getRenderData();
         for (int i = 0; i < dishesRender.length; i++) {
             var data = dishesRender[i];
-            this.render(RenderResource.DISHES[data.texture], 10 + (i * 50), 525, data.direction);
+            this.render(RenderResource.DISHES[data.texture], 10 + (i * 40), 518, data.direction);
         }
     }
 
@@ -83,8 +83,8 @@ public class Render extends GameApplication {
         this.renderClients();
         this.renderTables();
         this.renderChefs();
-        this.renderDishes();
         this.renderOverlays();
+        this.renderDishes();
     }
 
     private void renderBackground() {

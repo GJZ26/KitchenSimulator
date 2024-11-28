@@ -13,8 +13,8 @@ public class Main {
         RenderEntityCollection dishes = new RenderEntityCollection();
         RenderEntityCollection chefs = new RenderEntityCollection();
 
-        RestauranteService restauranteService = new RestauranteService();
 
+        RestauranteService restauranteService = new RestauranteService(dishes);
         Render render = new Render();
 
         render.setTables(restauranteService.obtenerMesasRenderizables());

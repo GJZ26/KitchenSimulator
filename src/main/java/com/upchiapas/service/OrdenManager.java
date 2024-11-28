@@ -7,16 +7,19 @@ import java.util.Queue;
 
 import com.upchiapas.model.EstadoOrden;
 import com.upchiapas.model.Orden;
+import com.upchiapas.render.collection.RenderEntityCollection;
 
 public class OrdenManager {
     private Queue<Orden> colaOrdenes;
     private Map<Long, Orden> ordenesActivas;
     private int ordenCounter;
+    private RenderEntityCollection dishes;
 
-    public OrdenManager() {
+    public OrdenManager(RenderEntityCollection dishes) {
         this.colaOrdenes = new LinkedList<>();
         this.ordenesActivas = new HashMap<>();
         this.ordenCounter = 0;
+        this.dishes = dishes;
     }
 
     public synchronized void agregarOrdenActiva(long clienteId) {
@@ -24,7 +27,7 @@ public class OrdenManager {
     }
 
     public synchronized Orden crearOrden(long clienteId) {
-        Orden nuevaOrden = new Orden(ordenCounter++, clienteId);
+        Orden nuevaOrden = new Orden(ordenCounter++, clienteId, this.dishes);
         nuevaOrden.setEstado(EstadoOrden.ATENDIDA);
         ordenesActivas.put(clienteId, nuevaOrden);
         return nuevaOrden;

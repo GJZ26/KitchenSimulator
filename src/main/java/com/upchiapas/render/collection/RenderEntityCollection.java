@@ -13,6 +13,7 @@ public class RenderEntityCollection {
     }
 
     public void addOrUpdate(Object key, RenderData value) {
+
         collection.put(key, value);
     }
 
