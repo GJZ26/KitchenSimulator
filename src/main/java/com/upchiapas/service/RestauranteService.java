@@ -17,7 +17,7 @@ public class RestauranteService {
         this.ordenManager = new OrdenManager();
     }
 
-    public int intentarSentarse() throws InterruptedException {
+    public RenderData intentarSentarse() throws InterruptedException {
         synchronized (lock) {
             Thread cliente = Thread.currentThread();
             colaEsperaManager.agregarACola(cliente);
@@ -30,14 +30,14 @@ public class RestauranteService {
             }
 
             if (!colaEsperaManager.colaVacia() && colaEsperaManager.siguienteEnCola() == cliente) {
-                int mesaAsignada = mesaManager.asignarMesa();
+                RenderData mesaAsignada = mesaManager.asignarMesa();
                 colaEsperaManager.siguienteSalirCola();
                 ordenManager.agregarOrdenActiva(cliente.threadId());
                 System.out.println("Cliente " + cliente.threadId() + " sentado en la mesa: " + mesaAsignada);
                 lock.notifyAll();
                 return mesaAsignada;
             }
-            return -1;
+            throw new RuntimeException("Error al intentar sentarse");
         }
     }
 

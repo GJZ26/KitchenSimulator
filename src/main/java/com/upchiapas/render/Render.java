@@ -7,12 +7,28 @@ import com.almasb.fxgl.texture.Texture;
 import com.upchiapas.config.RenderConfiguration;
 import com.upchiapas.model.Direction;
 import com.upchiapas.model.RenderData;
+import com.upchiapas.render.collection.RenderEntityCollection;
 
 public class Render extends GameApplication {
     static RenderData[] tables;
+    static RenderEntityCollection clients;
+
+    public void renderClients() {
+        if(clients == null) {
+            return;
+        }
+        RenderData[] clientsRender = clients.getRenderData();
+        for (RenderData data : clientsRender) {
+            this.render(RenderResource.CLIENTS[data.texture], data.x, data.y, data.direction);
+        }
+    }
 
     public void setTables(RenderData[] tablesMan) {
         tables = tablesMan;
+    }
+
+    public void  setClients(RenderEntityCollection clientsMan) {
+        clients = clientsMan;
     }
 
     @Override
@@ -33,7 +49,7 @@ public class Render extends GameApplication {
         super.onUpdate(tpf);
         this.clearScreen();
         this.renderBackground();
-
+        this.renderClients();
         this.renderTables();
         this.renderOverlays();
     }
@@ -89,4 +105,6 @@ public class Render extends GameApplication {
     public void run(String[] args) {
         launch(args);
     }
+
+
 }
