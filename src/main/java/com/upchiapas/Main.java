@@ -8,12 +8,16 @@ import com.upchiapas.config.RestauranteConfig;
 public class Main {
     public static void main(String[] args) {
 
-        Thread renderThread = new Thread(() -> Render.run(args));
+        RestauranteService restauranteService = new RestauranteService();
+
+        Render render = new Render();
+        render.setTables(restauranteService.obtenerMesasRenderizables());
+
+        Thread renderThread = new Thread(() -> render.run(args));
         renderThread.setDaemon(true); // Marca el hilo como daemon para que no bloquee la salida de la aplicación.
         renderThread.start();
 
-        RestauranteService restauranteService = new RestauranteService();
-        
+
         for (int i = 0; i < RestauranteConfig.NUM_MESEROS; i++) {
             new Mesero(restauranteService).start();
         }

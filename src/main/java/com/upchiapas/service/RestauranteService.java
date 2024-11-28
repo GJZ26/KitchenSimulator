@@ -3,6 +3,7 @@ package com.upchiapas.service;
 import com.upchiapas.config.RestauranteConfig;
 import com.upchiapas.model.EstadoOrden;
 import com.upchiapas.model.Orden;
+import com.upchiapas.model.RenderData;
 
 public class RestauranteService {
     private final Object lock = new Object();
@@ -17,31 +18,31 @@ public class RestauranteService {
     }
 
     public int intentarSentarse() throws InterruptedException {
-        synchronized(lock) {
+        synchronized (lock) {
             Thread cliente = Thread.currentThread();
             colaEsperaManager.agregarACola(cliente);
-    
-            while (!mesaManager.hayMesasDisponibles() || 
-                   !colaEsperaManager.colaVacia() && 
-                   colaEsperaManager.siguienteEnCola() != cliente) {
+
+            while (!mesaManager.hayMesasDisponibles() ||
+                    !colaEsperaManager.colaVacia() &&
+                            colaEsperaManager.siguienteEnCola() != cliente) {
                 System.out.println("Cliente " + cliente.threadId() + " esperando mesas");
                 lock.wait();
             }
-    
+
             if (!colaEsperaManager.colaVacia() && colaEsperaManager.siguienteEnCola() == cliente) {
                 int mesaAsignada = mesaManager.asignarMesa();
                 colaEsperaManager.siguienteSalirCola();
                 ordenManager.agregarOrdenActiva(cliente.threadId());
                 System.out.println("Cliente " + cliente.threadId() + " sentado en la mesa: " + mesaAsignada);
-                lock.notifyAll(); 
+                lock.notifyAll();
                 return mesaAsignada;
             }
             return -1;
         }
     }
-    
+
     public Orden atenderCliente() throws InterruptedException {
-        synchronized(lock) {
+        synchronized (lock) {
             while (true) {
                 for (Long clienteId : ordenManager.getOrdenesActivas().keySet()) {
                     if (ordenManager.obtenerOrdenActiva(clienteId) == null) {
@@ -56,17 +57,17 @@ public class RestauranteService {
             }
         }
     }
-    
+
     public void ordenEnCola(Orden orden) {
-        synchronized(lock) {
+        synchronized (lock) {
             ordenManager.agregarOrdenACola(orden);
             System.out.println("Mesero: " + Thread.currentThread().threadId() + " coloca la orden: " + orden.getId() + " del cliente: " + orden.getIdCliente() + " en cola de cocina. - Pos: " + orden.getPosicionCola());
             lock.notifyAll();
         }
     }
-    
+
     public Orden prepararOrden() throws InterruptedException {
-        synchronized(lock) {
+        synchronized (lock) {
             while (ordenManager.colaOrdenesVacia()) {
                 lock.wait(RestauranteConfig.DELAY_BASE);
             }
@@ -76,27 +77,27 @@ public class RestauranteService {
                 System.out.println("Cocinero: " + Thread.currentThread().threadId() + " esta cocinando la orden: " + orden.getId() + " del cliente: " + orden.getIdCliente());
             }
             return orden;
+        }
     }
-    }
-    
+
     public void terminarOrden(Orden orden) {
-        synchronized(lock) {
+        synchronized (lock) {
             if (orden.getEstado() != EstadoOrden.LISTA) {
                 orden.setEstado(EstadoOrden.LISTA);
-                System.out.println("Cocinero: " + Thread.currentThread().threadId() + " termina la orden: " + orden.getId() + " del cliente: " + orden.getIdCliente() +  " - Mesero: " + orden.getMeseroAsignado());
+                System.out.println("Cocinero: " + Thread.currentThread().threadId() + " termina la orden: " + orden.getId() + " del cliente: " + orden.getIdCliente() + " - Mesero: " + orden.getMeseroAsignado());
                 lock.notifyAll();
             }
         }
     }
-    
+
     public Orden servirOrden() throws InterruptedException {
-        synchronized(lock) {
+        synchronized (lock) {
             long meseroId = Thread.currentThread().threadId();
             while (true) {
                 for (Orden orden : ordenManager.getOrdenesActivas().values()) {
-                    if (orden != null && 
-                        orden.getEstado() == EstadoOrden.LISTA && 
-                        orden.getMeseroAsignado() == meseroId) {
+                    if (orden != null &&
+                            orden.getEstado() == EstadoOrden.LISTA &&
+                            orden.getMeseroAsignado() == meseroId) {
                         orden.setEstado(EstadoOrden.SERVIDA);
                         orden.setOrdenServida(true);
                         System.out.println("Mesero: " + meseroId + " sirve la orden: " + orden.getId() + " al cliente: " + orden.getIdCliente());
@@ -107,19 +108,19 @@ public class RestauranteService {
             }
         }
     }
-    
+
     public boolean retirarCliente(long clienteId) {
-        synchronized(lock) {
+        synchronized (lock) {
             Orden orden = ordenManager.obtenerOrdenActiva(clienteId);
             return orden != null && orden.isOrdenServida();
         }
     }
-    
+
     public void liberarMesa(int numeroMesa) {
-        synchronized(lock) {
+        synchronized (lock) {
             long clienteId = Thread.currentThread().threadId();
             Orden orden = ordenManager.obtenerOrdenActiva(clienteId);
-            
+
             if (orden != null && orden.isOrdenServida()) {
                 orden.setEstado(EstadoOrden.COMPLETADA);
                 System.out.println("Cliente " + clienteId + " termina de comer. Orden " + orden.getId() + " completada");
@@ -130,4 +131,9 @@ public class RestauranteService {
             lock.notifyAll();
         }
     }
+
+    public RenderData[] obtenerMesasRenderizables() {
+        return mesaManager.getMesasDisponibles();
+    }
+
 }

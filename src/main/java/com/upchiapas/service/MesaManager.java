@@ -1,15 +1,29 @@
 package com.upchiapas.service;
 
+import com.upchiapas.model.Direction;
+import com.upchiapas.model.RenderData;
+import com.upchiapas.render.Render;
+import com.upchiapas.render.RenderResource;
+
 public class MesaManager {
     private final int MAX_MESAS;
-    private boolean[] mesasOcupadas;
+    private  boolean[] mesasOcupadas;
+    private  RenderData[] mesas;
     private int mesasDisponibles;
+
 
     public MesaManager(int capacidad) {
         this.MAX_MESAS = capacidad;
+        this.mesas = new RenderData[MAX_MESAS];
         this.mesasOcupadas = new boolean[MAX_MESAS];
         this.mesasDisponibles = MAX_MESAS;
+
+        for (int i = 0; i < MAX_MESAS; i++) {
+            mesas[i] = new RenderData(10 + (i * 70), 250, 0, Direction.UP);
+            mesasOcupadas[i] = false;
+        }
     }
+
 
     public synchronized int asignarMesa() {
         for (int i = 0; i < MAX_MESAS; i++) {
@@ -33,7 +47,7 @@ public class MesaManager {
         return mesasDisponibles > 0;
     }
 
-    public synchronized int getMesasDisponibles() {
-        return mesasDisponibles;
+    public RenderData[] getMesasDisponibles() {
+        return mesas;
     }
 }
