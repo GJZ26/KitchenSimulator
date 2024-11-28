@@ -8,6 +8,9 @@ import com.upchiapas.config.RenderConfiguration;
 import com.upchiapas.model.Direction;
 import com.upchiapas.model.RenderData;
 import com.upchiapas.render.collection.RenderEntityCollection;
+import javafx.scene.Group;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 
 public class Render extends GameApplication {
     static RenderData[] tables;
@@ -22,6 +25,15 @@ public class Render extends GameApplication {
         }
         RenderData[] clientsRender = clients.getRenderData();
         for (RenderData data : clientsRender) {
+            if (data.isEating) {
+                Circle circle = new Circle();
+                circle.setCenterX(data.x + 25);
+                circle.setCenterY(data.y - 15);
+                circle.setRadius(10);
+                Group root = new Group(circle);
+                circle.setFill(Color.GREENYELLOW);
+                FXGL.getGameScene().addUINode(root);
+            }
             this.render(RenderResource.CLIENTS[data.texture], data.x, data.y, data.direction);
         }
     }

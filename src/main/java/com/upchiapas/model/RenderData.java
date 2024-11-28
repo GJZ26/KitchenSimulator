@@ -8,6 +8,7 @@ public class RenderData {
     public double y;
     public int texture;
     public Direction direction;
+    public boolean isEating = false;
 
     public RenderData(double x, double y, int texture, Direction direction, int id) {
         this.x = x;
@@ -22,5 +23,13 @@ public class RenderData {
         this.y = y;
         this.texture = texture;
         this.direction = direction;
+    }
+
+    public RenderData(double x, double y, int texture, Direction direction, boolean isEating) {
+        this.x = x;
+        this.y = y;
+        this.texture = texture;
+        this.direction = direction;
+        this.isEating = isEating;
     }
 }

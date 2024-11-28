@@ -43,6 +43,9 @@ public class Cliente extends Thread {
                 // Espera su orden
                 Thread.sleep(1000);
             }
+            clients.addOrUpdate(
+                    threadId(), new RenderData(x,y,this.textureAlternative,Direction.UP, true)
+            );
             // Come
             Thread.sleep((long) (Math.random() * 5000 + 3000));
             while (true) {
