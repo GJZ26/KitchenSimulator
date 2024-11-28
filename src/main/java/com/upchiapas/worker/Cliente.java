@@ -1,7 +1,6 @@
-package com.upchiapas.worker;
+package worker;
 
-
-import com.upchiapas.service.RestauranteService;
+import service.RestauranteService;
 
 public class Cliente extends Thread {
     private final RestauranteService restauranteService;
@@ -15,6 +14,7 @@ public class Cliente extends Thread {
     public void run() {
         try {
             numeroMesa = restauranteService.intentarSentarse();
+            // Comer
             while (!restauranteService.retirarCliente(threadId())) {
                 Thread.sleep(1000);
             }

@@ -1,7 +1,7 @@
-package com.upchiapas.worker;
+package worker;
 
-import com.upchiapas.model.Orden;
-import com.upchiapas.service.RestauranteService;
+import service.RestauranteService;
+import model.Orden;
 
 public class Cocinero extends Thread {
     private final RestauranteService restauranteService;

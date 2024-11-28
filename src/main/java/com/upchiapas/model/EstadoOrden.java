@@ -1,4 +1,4 @@
-package com.upchiapas.model;
+package model;
 
 public enum EstadoOrden {
     ESPERANDO_MESERO,
