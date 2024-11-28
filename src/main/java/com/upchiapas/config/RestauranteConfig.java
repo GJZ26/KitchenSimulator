@@ -1,4 +1,4 @@
-package config;
+package com.upchiapas.config;
 
 public class RestauranteConfig {
     public static final int NUM_MESEROS = 5;

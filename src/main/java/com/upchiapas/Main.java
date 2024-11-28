@@ -1,9 +1,13 @@
-import service.*;
-import worker.*;
-import config.RestauranteConfig;
+package com.upchiapas;
+
+import com.upchiapas.render.Render;
+import com.upchiapas.service.*;
+import com.upchiapas.worker.*;
+import com.upchiapas.config.RestauranteConfig;
 
 public class Main {
     public static void main(String[] args) {
+        Render.run(args);
         RestauranteService restauranteService = new RestauranteService();
         
         for (int i = 0; i < RestauranteConfig.NUM_MESEROS; i++) {

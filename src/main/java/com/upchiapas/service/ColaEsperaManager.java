@@ -1,4 +1,4 @@
-package service;
+package com.upchiapas.service;
 
 import java.util.LinkedList;
 import java.util.Queue;

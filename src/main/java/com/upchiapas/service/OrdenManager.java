@@ -1,12 +1,12 @@
-package service;
+package com.upchiapas.service;
 
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Queue;
 
-import model.EstadoOrden;
-import model.Orden;
+import com.upchiapas.model.EstadoOrden;
+import com.upchiapas.model.Orden;
 
 public class OrdenManager {
     private Queue<Orden> colaOrdenes;

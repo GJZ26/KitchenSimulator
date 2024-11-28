@@ -1,8 +1,8 @@
-package service;
+package com.upchiapas.service;
 
-import config.RestauranteConfig;
-import model.EstadoOrden;
-import model.Orden;
+import com.upchiapas.config.RestauranteConfig;
+import com.upchiapas.model.EstadoOrden;
+import com.upchiapas.model.Orden;
 
 public class RestauranteService {
     private final Object lock = new Object();

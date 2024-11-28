@@ -1,4 +1,4 @@
-package service;
+package com.upchiapas.service;
 
 public class MesaManager {
     private final int MAX_MESAS;
